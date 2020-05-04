@@ -25,14 +25,14 @@ function InitThis() {
 	canvas.addEventListener("mouseleave", mouseleave);
 	canvas.addEventListener("mouseenter", mouseenter);
 
-	context.fillStyle = "rgba(0, 0, 255, 255)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+	//context.fillStyle = "rgba(0, 0, 255, 255)";
+    //context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function mousedown(e) {
 	if (enabled) {
 	  	if (document.getElementById(brushTypeID).value === typeBucket) {
-			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, [255, 0, 0, 255]);
+			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, hexToRgbA(document.getElementById(colorID).value));
 		} else {
     		mousePressed = true;
     		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
@@ -86,7 +86,7 @@ function Draw(x, y, isDown) {
   			context.stroke();
 
 		} else if (brushType === typeBucket) {
-			floodFill(x, y, [255, 0, 0, 255]);
+			floodFill(x, y, hexToRgbA(document.getElementById(colorID).value));
 		}
 	}
 	lastX = x;
@@ -184,6 +184,22 @@ function setEnabled(_enabled) {
   document.getElementById(colorID).disabled = !_enabled;
   enabled = _enabled;
   clearArea();
-  //var image = canvas.toDataURL("image/png");
-  //document.write('<img src="' + image + '"/>');
+}
+
+function hexToRgbA(hex){
+    var c;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length== 3){
+            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+		var toReturn = [];
+		toReturn[0] = (c>>16)&255;
+		toReturn[1] = (c>>8)&255;
+		toReturn[2] = c&255;
+		toReturn[3] = 255;
+		return toReturn;
+    }
+    throw new Error('Bad Hex');
 }
