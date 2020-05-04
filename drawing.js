@@ -15,7 +15,6 @@ function InitThis() {
 	canvas.addEventListener("mouseenter", mouseenter);
 }
 
-function mousedown(e) {
 	mousePressed = true;
 	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 	//Draw(e.clientX, e.clientY, false);
