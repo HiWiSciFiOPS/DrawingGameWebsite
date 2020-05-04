@@ -8,9 +8,9 @@ var enabled = true;
 const canvasID = "drawingCanvas";
 const clearButtonID = "clearButton";
 const brushTypeID = "brushT";
-const typePencil = "pencil";
-const typeBucket = "bucket";
-const typeEraser = "eraser";
+	const typePencil = "pencil";
+	const typeBucket = "bucket";
+	const typeEraser = "eraser";
 const colorID = "setColor";
 const widthID = "setLWidth";
 
@@ -41,28 +41,28 @@ function mousedown(e) {
 }
 
 function mousemove(e) {
-  if (enabled && mousePressed) {
-    Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
-  }
+	if (enabled && mousePressed) {
+    	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
+	}
 }
 
 function mouseup(e) {
-  if (enabled) {
-    mousePressed = false;
-  }
+	if (enabled) {
+    	mousePressed = false;
+	}
 }
 
 function mouseleave(e) {
-  if (enabled) {
-    mousePressed = false;
-  }
+	if (enabled) {
+    	mousePressed = false;
+	}
 }
 
 function mouseenter(e) {
-  if (enabled && e.buttons === 1) {
-    mousePressed = true;
-    Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
-  }
+	if (enabled && e.buttons === 1) {
+	  	mousePressed = true;
+		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
+	}
 }
 
 function Draw(x, y, isDown) {
@@ -168,25 +168,25 @@ function compareColors(first, second) {
 }
 
 function clearArea() {
-  context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.setTransform(1, 0, 0, 1, 0, 0);
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
 function toggleEnabled() {
-  setEnabled(!document.getElementById(clearButtonID).disabled);
+	setEnabled(!document.getElementById(clearButtonID).disabled);
 }
 
 function setEnabled(_enabled) {
-  _enabled = !_enabled;
-  document.getElementById(clearButtonID).disabled = !_enabled;
-  document.getElementById(brushTypeID).disabled = !_enabled;
-  document.getElementById(widthID).disabled = !_enabled;
-  document.getElementById(colorID).disabled = !_enabled;
-  enabled = _enabled;
-  clearArea();
+	_enabled = !_enabled;
+	document.getElementById(clearButtonID).disabled = !_enabled;
+	document.getElementById(brushTypeID).disabled = !_enabled;
+	document.getElementById(widthID).disabled = !_enabled;
+	document.getElementById(colorID).disabled = !_enabled;
+	enabled = _enabled;
+	clearArea();
 }
 
-function hexToRgbA(hex){
+function hexToRgbA(hex) {
     var c;
     if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
         c= hex.substring(1).split('');
