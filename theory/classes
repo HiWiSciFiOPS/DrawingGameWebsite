@@ -7,10 +7,20 @@ Room
 		maxRounds
 
 	changeing attributes
-		players
+		players[] (ca be null)
 
 		logic attributes
 			drawtime
 			round
 			word
-			
+			(chat)
+			drawignplayer
+
+Player
+	const
+		name
+		guessed
+		drawing
+		score
+		avatar
+		
