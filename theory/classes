@@ -1,0 +1,16 @@
+Room
+	const attributes
+		id
+		wordPraeset
+		customWords[]
+		maxDrawtime
+		maxRounds
+
+	changeing attributes
+		players
+
+		logic attributes
+			drawtime
+			round
+			word
+			
