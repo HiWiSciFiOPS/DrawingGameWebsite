@@ -1,11 +1,22 @@
 var mousePressed = false;
 var lastX, lastY;
 var context;
-
 var canvas;
 
+var enabled = true;
+
+const canvasID = "drawingCanvas";
+const clearButtonID = "clearButton";
+const brushTypeID = "brushT";
+	const typePencil = "pencil";
+	const typeBucket = "bucket";
+	const typeEraser = "eraser";
+const colorID = "setColor";
+const widthID = "setLWidth";
+
+
 function InitThis() {
-	canvas = document.getElementById("drawingCanvas");
+	canvas = document.getElementById(canvasID);
 	context = canvas.getContext("2d");
 	
 	canvas.addEventListener("mousedown", mousedown);
@@ -15,28 +26,33 @@ function InitThis() {
 	canvas.addEventListener("mouseenter", mouseenter);
 }
 
-	mousePressed = true;
-	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
-	//Draw(e.clientX, e.clientY, false);
+function mousedown(e) {
+	if (enabled) {
+		mousePressed = true;
+		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
+	}
 }
 
 function mousemove(e) {
-	if (mousePressed) {
+	if (enabled && mousePressed) {
 		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
-		//Draw(e.clientX, e.clientY, true);
 	}
 }
 
 function mouseup(e) {
-	mousePressed = false;
+	if (enabled) {
+		mousePressed = false;
+	}
 }
 
 function mouseleave(e) {
-	mousePressed = false;
+	if (enabled) {
+		mousePressed = false;
+	}
 }
 
 function mouseenter(e) {
-	if (e.buttons === 1) {
+	if (enabled && e.buttons === 1) {
 		mousePressed = true;
 		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 	}
@@ -44,14 +60,24 @@ function mouseenter(e) {
 
 function Draw(x, y, isDown) {
 	if (isDown) {
-		context.beginPath();
-		context.strokeStyle = document.getElementById("setColor").value;
-		context.lineWidth = document.getElementById("setLWidth").value;
-		context.lineJoin = "round";
-		context.moveTo(lastX, lastY);
-		context.lineTo(x, y);
-		context.closePath();
-		context.stroke();
+		var brushType = document.getElementById(brushTypeID).value;
+		
+		if (brushType === typePencil || brushType === typeEraser) {
+			context.beginPath();
+			
+			if (brushType === typePencil) {
+				context.strokeStyle = document.getElementById(colorID).value;
+			} else if (brushType === typeEraser) {
+				context.strokeStyle = "white";
+			}
+			
+			context.lineWidth = document.getElementById(widthID).value;
+			context.lineJoin = "round";
+			context.moveTo(lastX, lastY);
+			context.lineTo(x, y);
+			context.closePath();
+			context.stroke();
+		}
 	}
 	lastX = x;
 	lastY = y;
@@ -60,4 +86,20 @@ function Draw(x, y, isDown) {
 function clearArea() {
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+function toggleEnabled() {
+	setEnabled(!document.getElementById(clearButtonID).disabled);
+}
+
+function setEnabled(_enabled) {
+	_enabled = !_enabled;
+	document.getElementById(clearButtonID).disabled = !_enabled;
+	document.getElementById(brushTypeID).disabled = !_enabled;
+	document.getElementById(widthID).disabled = !_enabled;
+	document.getElementById(colorID).disabled = !_enabled;
+	enabled = _enabled;
+	clearArea();
+	//var image = canvas.toDataURL("image/png");
+	//document.write('<img src="' + image + '"/>');
 }
