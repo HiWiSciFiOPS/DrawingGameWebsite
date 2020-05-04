@@ -5,7 +5,11 @@
 	<head></head>
 	
 	<body onload="InitThis();">
-	
+		
+		<script src="lib/jquery-3.4.1.slim.min.js"></script>
+		<script src="lib/popper.min.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+		
 		<script type="text/javascript" src="drawing.js"></script>
 		
 		<div align="center">
@@ -20,9 +24,11 @@
 				<option value="eraser">Eraser</option>
 			</select>
 			
-			<button><img src="./gizmos/pencil.png"></button>
-			<button><img src="./gizmos/bucket.png"></button>
-			<button><img src="./gizmos/eraser.png"></button>
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-secondary"><img src="./gizmos/pencil.png"></button>
+				<button type="button" class="btn btn-secondary"><img src="./gizmos/bucket.png"></button>
+				<button type="button" class="btn btn-secondary"><img src="./gizmos/eraser.png"></button>
+			</div>
 			
 			Line width : <select id="setLWidth">
 				<option value="1">1</option>
