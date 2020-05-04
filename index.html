@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+	<title>Testseite title</title>
+	<head></head>
+	
+	<body onload="InitThis();">
+	
+		<script type="text/javascript" src="script.js"></script>
+		
+		<div align="center">
+			<canvas id="drawingCanvas" width="1000" height="500" style="border:2px solid black"></canvas>
+			<br></br>
+			<button onclick="javascript:clearArea();return false;">ClearArea</button>
+			Line width : <select id="setLWidth">
+				<option value="1">1</option>
+				<option value="3">3</option>
+				<option value="5">5</option>
+				<option value="7">7</option>
+				<option value="9" selected="selected">9</option>
+				<option value="11">11</option>
+			</select>
+			Color : <select id="setColor">
+				<option value="black">black</option>
+				<option value="blue" selected="selected">blue</option>
+				<option value="red">red</option>
+				<option value="green">green</option>
+				<option value="yellow">yellow</option>
+				<option value="gray">gray</option>
+			</select>
+		</div>
+	</body>
+</html>
