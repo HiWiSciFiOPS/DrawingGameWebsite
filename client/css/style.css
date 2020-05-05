@@ -1,19 +1,21 @@
-.med-btn {
+.big-img-selected {
+  width: 70px;
+  height: 70px;
+  outline-style: solid;
+}
+
+.big-img-unselected {
+	width: 100px;
+	height: 100px;
+}
+
+.med-img-selected {
 	width: 50px;
-	height: 40px;
+	height: 50px;
+	outline-style: solid;
 }
 
-.big-btn {
-  width: 100px;
-  height: 100px;
-}
-
-.big-img {
-  width: 100px;
-  height: 100px;
-}
-
-.med-img {
+.med-img-unselected {
 	width: 50px;
 	height: 50px;
 }

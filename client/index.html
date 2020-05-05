@@ -19,11 +19,11 @@
 
 		<canvas id="drawingCanvas" width="800" height="600" style="border:2px solid black"></canvas>
 		<br>
-		<img class="big-img" onclick="javascript:clearArea();" src="gizmos/bin.png">
+		<img class="med-img-unselected" onclick="javascript:clearArea();" src="gizmos/bin.png">
 
-		<img class="big-img" onclick="javascript:selectBrush('pencil');" src="gizmos/pencil.png">
-		<img class="big-img" onclick="javascript:selectBrush('bucket');" src="gizmos/bucket.png">
-		<img class="big-img" onclick="javascript:selectBrush('eraser');" src="gizmos/eraser.png">
+		<img id="brush_pencil" class="big-img-selected" onclick="javascript:selectBrush('pencil');" src="gizmos/pencil.png">
+		<img id="brush_bucket" class="med-img-unselected" onclick="javascript:selectBrush('bucket');" src="gizmos/bucket.png">
+		<img id="brush_eraser" class="med-img-unselected" onclick="javascript:selectBrush('eraser');" src="gizmos/eraser.png">
 
 		Line width : <select id="setLWidth">
 			<option value="1">1</option>
@@ -38,23 +38,23 @@
 
 		<br>
 
-		<img class="med-img" onclick="javascript:selectColor('#000000');" src="gizmos/colors/black.png">
-		<img class="med-img" onclick="javascript:selectColor('#FFFFFF');" src="gizmos/colors/white.png">
-		<img class="med-img" onclick="javascript:selectColor('#FF0000');" src="gizmos/colors/red.png">
-		<img class="med-img" onclick="javascript:selectColor('#00FF00');" src="gizmos/colors/lime.png">
-		<img class="med-img" onclick="javascript:selectColor('#0000FF');" src="gizmos/colors/blue.png">
-		<img class="med-img" onclick="javascript:selectColor('#FFFF00');" src="gizmos/colors/yellow.png">
-		<img class="med-img" onclick="javascript:selectColor('#00FFFF');" src="gizmos/colors/cyan.png">
-		<img class="med-img" onclick="javascript:selectColor('#FF00FF');" src="gizmos/colors/magenta.png">
+		<img id="color_#000000" class="med-img-selected" onclick="javascript:selectColor('#000000');" src="gizmos/colors/black.png">
+		<img id="color_#FFFFFF" class="med-img-unselected" onclick="javascript:selectColor('#FFFFFF');" src="gizmos/colors/white.png">
+		<img id="color_#FF0000" class="med-img-unselected" onclick="javascript:selectColor('#FF0000');" src="gizmos/colors/red.png">
+		<img id="color_#00FF00" class="med-img-unselected" onclick="javascript:selectColor('#00FF00');" src="gizmos/colors/lime.png">
+		<img id="color_#0000FF" class="med-img-unselected" onclick="javascript:selectColor('#0000FF');" src="gizmos/colors/blue.png">
+		<img id="color_#FFFF00" class="med-img-unselected" onclick="javascript:selectColor('#FFFF00');" src="gizmos/colors/yellow.png">
+		<img id="color_#00FFFF" class="med-img-unselected" onclick="javascript:selectColor('#00FFFF');" src="gizmos/colors/cyan.png">
+		<img id="color_#FF00FF" class="med-img-unselected" onclick="javascript:selectColor('#FF00FF');" src="gizmos/colors/magenta.png">
 		<br>
-		<img class="med-img" onclick="javascript:selectColor('#C0C0C0');" src="gizmos/colors/silver.png">
-		<img class="med-img" onclick="javascript:selectColor('#808080');" src="gizmos/colors/gray.png">
-		<img class="med-img" onclick="javascript:selectColor('#800000');" src="gizmos/colors/maroon.png">
-		<img class="med-img" onclick="javascript:selectColor('#808000');" src="gizmos/colors/olive.png">
-		<img class="med-img" onclick="javascript:selectColor('#008000');" src="gizmos/colors/green.png">
-		<img class="med-img" onclick="javascript:selectColor('#800080');" src="gizmos/colors/purple.png">
-		<img class="med-img" onclick="javascript:selectColor('#008080');" src="gizmos/colors/teal.png">
-		<img class="med-img" onclick="javascript:selectColor('#000080');" src="gizmos/colors/navy.png">
+		<img id="color_#C0C0C0" class="med-img-unselected" onclick="javascript:selectColor('#C0C0C0');" src="gizmos/colors/silver.png">
+		<img id="color_#808080" class="med-img-unselected" onclick="javascript:selectColor('#808080');" src="gizmos/colors/gray.png">
+		<img id="color_#800000" class="med-img-unselected" onclick="javascript:selectColor('#800000');" src="gizmos/colors/maroon.png">
+		<img id="color_#808000" class="med-img-unselected" onclick="javascript:selectColor('#808000');" src="gizmos/colors/olive.png">
+		<img id="color_#008000" class="med-img-unselected" onclick="javascript:selectColor('#008000');" src="gizmos/colors/green.png">
+		<img id="color_#800080" class="med-img-unselected" onclick="javascript:selectColor('#800080');" src="gizmos/colors/purple.png">
+		<img id="color_#008080" class="med-img-unselected" onclick="javascript:selectColor('#008080');" src="gizmos/colors/teal.png">
+		<img id="color_#000080" class="med-img-unselected" onclick="javascript:selectColor('#000080');" src="gizmos/colors/navy.png">
 
 	</div>
 </body>

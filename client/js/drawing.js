@@ -171,11 +171,25 @@ function clearArea() {
 
 function selectColor(hex) {
 	console.log("selected color: " + hex);
+
+	var btn = document.getElementById("color_" + selectedColor);
+	btn.setAttribute("class", "med-img-unselected");
+
+	btn = document.getElementById("color_" + hex);
+	btn.setAttribute("class", "med-img-selected");
+
 	selectedColor = hex;
 }
 
 function selectBrush(brush) {
 	console.log("selected brush: " + brush);
+
+	var btn = document.getElementById("brush_" + selectedBrush);
+	btn.setAttribute("class", "med-img-unselected");
+
+	btn = document.getElementById("brush_" + brush);
+	btn.setAttribute("class", "big-img-selected");
+
 	selectedBrush = brush;
 }
 
