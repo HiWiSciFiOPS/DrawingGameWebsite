@@ -6,14 +6,15 @@ var canvas;
 var enabled = true;
 
 const canvasID = "drawingCanvas";
+
 const clearButtonID = "clearButton";
-const brushTypeID = "brushT";
-	const typePencil = "pencil";
-	const typeBucket = "bucket";
-	const typeEraser = "eraser";
+const typePencil = "pencil";
+const typeBucket = "bucket";
+const typeEraser = "eraser";
 const widthID = "setLWidth";
 
 var selectedColor = '#000000';
+var selectedBrush = 'pencil';
 
 
 function InitThis() {
@@ -32,7 +33,7 @@ function InitThis() {
 
 function mousedown(e) {
 	if (enabled) {
-	  	if (document.getElementById(brushTypeID).value === typeBucket) {
+	  	if (selectedBrush === typeBucket) {
 			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, hexToRgbA(selectedColor));
 		} else {
     		mousePressed = true;
@@ -42,7 +43,7 @@ function mousedown(e) {
 }
 
 function mousemove(e) {
-	if (enabled && mousePressed && !(document.getElementById(brushTypeID).value === typeBucket)) {
+	if (enabled && mousePressed && !(selectedBrush === typeBucket)) {
     	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
 	}
 }
@@ -60,7 +61,7 @@ function mouseleave(e) {
 }
 
 function mouseenter(e) {
-	if (enabled && e.buttons === 1 && !(document.getElementById(brushTypeID).value === typeBucket)) {
+	if (enabled && e.buttons === 1 && !(selectedBrush === typeBucket)) {
 	  	mousePressed = true;
 		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 	}
@@ -68,14 +69,13 @@ function mouseenter(e) {
 
 function Draw(x, y, isDown) {
 	if (isDown) {
-    	var brushType = document.getElementById(brushTypeID).value;
 
-    	if (brushType === typePencil || brushType === typeEraser) {
+    	if (selectedBrush === typePencil || selectedBrush === typeEraser) {
       		context.beginPath();
 
-      		if (brushType === typePencil) {
+      		if (selectedBrush === typePencil) {
         		context.strokeStyle = selectedColor;
-      		} else if (brushType === typeEraser) {
+      		} else if (selectedBrush === typeEraser) {
         		context.strokeStyle = "white";
       		}
 
@@ -85,9 +85,6 @@ function Draw(x, y, isDown) {
   			context.lineTo(x, y);
   			context.closePath();
   			context.stroke();
-
-		} else if (brushType === typeBucket) {
-			floodFill(x, y, hexToRgbA(document.getElementById(colorID).value));
 		}
 	}
 	lastX = x;
@@ -178,18 +175,9 @@ function selectColor(hex) {
 	selectedColor = hex;
 }
 
-function toggleEnabled() {
-	setEnabled(!document.getElementById(clearButtonID).disabled);
-}
-
-function setEnabled(_enabled) {
-	_enabled = !_enabled;
-	document.getElementById(clearButtonID).disabled = !_enabled;
-	document.getElementById(brushTypeID).disabled = !_enabled;
-	document.getElementById(widthID).disabled = !_enabled;
-	document.getElementById(colorID).disabled = !_enabled;
-	enabled = _enabled;
-	clearArea();
+function selectBrush(brush) {
+	console.log("selected brush: " + brush);
+	selectedBrush = brush;
 }
 
 function hexToRgbA(hex) {

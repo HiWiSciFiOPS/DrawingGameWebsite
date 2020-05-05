@@ -21,15 +21,9 @@
 		<br>
 		<button id="clearButton" class="big-btn" onclick="javascript:clearArea();return false;"><img class="big-img" src="gizmos/bin.png"></button>
 
-		Brush type : <select id="brushT">
-			<option value="pencil" selected="selected">Pencil</option>
-			<option value="bucket">Bucket</option>
-			<option value="eraser">Eraser</option>
-		</select>
-
-		<button class="big-btn"><img class="big-img" src="gizmos/pencil.png"></button>
-		<button class="big-btn"><img class="big-img" src="gizmos/bucket.png"></button>
-		<button class="big-btn"><img class="big-img" src="gizmos/eraser.png"></button>
+		<button class="big-btn" onclick="javascript:selectBrush('pencil');"><img class="big-img" src="gizmos/pencil.png"></button>
+		<button class="big-btn" onclick="javascript:selectBrush('bucket');"><img class="big-img" src="gizmos/bucket.png"></button>
+		<button class="big-btn" onclick="javascript:selectBrush('eraser');"><img class="big-img" src="gizmos/eraser.png"></button>
 
 		Line width : <select id="setLWidth">
 			<option value="1">1</option>
@@ -61,10 +55,6 @@
 		<button class="med-btn" onclick="javascript:selectColor('#800080');"><img class="big-img" src="gizmos/colors/purple.png"></button>
 		<button class="med-btn" onclick="javascript:selectColor('#008080');"><img class="big-img" src="gizmos/colors/teal.png"></button>
 		<button class="med-btn" onclick="javascript:selectColor('#000080');"><img class="big-img" src="gizmos/colors/navy.png"></button>
-
-		<br>
-
-		<button onclick="javascript:toggleEnabled();">Toggle interactive</button>
 
 	</div>
 </body>
