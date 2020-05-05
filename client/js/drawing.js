@@ -7,7 +7,6 @@ var enabled = true;
 
 const canvasID = "drawingCanvas";
 
-const clearButtonID = "clearButton";
 const typePencil = "pencil";
 const typeBucket = "bucket";
 const typeEraser = "eraser";
