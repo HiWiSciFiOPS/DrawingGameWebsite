@@ -28,6 +28,8 @@ function InitThis() {
 
 	//context.fillStyle = "rgba(0, 0, 255, 255)";
     //context.fillRect(0, 0, canvas.width, canvas.height);
+
+	context.imageSmoothingEnabled = false;
 }
 
 function mousedown(e) {
@@ -157,8 +159,19 @@ function getColorAt(imgDat, x, y) {
 	return toReturn;
 }
 
+const threshold = 100;
 function compareColors(first, second) {
-	if (first[0] === second[0] && first[1] === second[1] && first[2] === second[2] && first[3] === second[3]) {
+	if (equals(first[0], second[0], threshold) &&
+		equals(first[1], second[1], threshold) &&
+		equals(first[2], second[2], threshold) &&
+		equals(first[3], second[3], threshold)) {
+		return true;
+	}
+	return false;
+}
+
+function equals(x, y, th) {
+	if (Math.abs(x-y) < th) {
 		return true;
 	}
 	return false;
