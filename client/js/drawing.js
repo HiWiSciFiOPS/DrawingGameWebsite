@@ -11,8 +11,9 @@ const brushTypeID = "brushT";
 	const typePencil = "pencil";
 	const typeBucket = "bucket";
 	const typeEraser = "eraser";
-const colorID = "setColor";
 const widthID = "setLWidth";
+
+var selectedColor = '#000000';
 
 
 function InitThis() {
@@ -32,7 +33,7 @@ function InitThis() {
 function mousedown(e) {
 	if (enabled) {
 	  	if (document.getElementById(brushTypeID).value === typeBucket) {
-			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, hexToRgbA(document.getElementById(colorID).value));
+			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, hexToRgbA(selectedColor));
 		} else {
     		mousePressed = true;
     		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
@@ -41,7 +42,7 @@ function mousedown(e) {
 }
 
 function mousemove(e) {
-	if (enabled && mousePressed) {
+	if (enabled && mousePressed && !(document.getElementById(brushTypeID).value === typeBucket)) {
     	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
 	}
 }
@@ -59,7 +60,7 @@ function mouseleave(e) {
 }
 
 function mouseenter(e) {
-	if (enabled && e.buttons === 1) {
+	if (enabled && e.buttons === 1 && !(document.getElementById(brushTypeID).value === typeBucket)) {
 	  	mousePressed = true;
 		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 	}
@@ -73,7 +74,7 @@ function Draw(x, y, isDown) {
       		context.beginPath();
 
       		if (brushType === typePencil) {
-        		context.strokeStyle = document.getElementById(colorID).value;
+        		context.strokeStyle = selectedColor;
       		} else if (brushType === typeEraser) {
         		context.strokeStyle = "white";
       		}
@@ -170,6 +171,11 @@ function compareColors(first, second) {
 function clearArea() {
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+function selectColor(hex) {
+	console.log("selected color: " + hex);
+	selectedColor = hex;
 }
 
 function toggleEnabled() {
