@@ -11,14 +11,21 @@
 	<script>
 		var socket = io();
 		function sendText() {
-			socket.emit('chat message', document.getElementById('inField').value);
+			socket.emit("chat message", document.getElementById("inField").value);
 			console.log('sent: ' + document.getElementById('inField').value);
-			document.getElementById('inField').value = "";
+			document.getElementById("inField").value = "";
 		}
 
 		function initialize() {
 			socket.on('chat message', function(msg) {
 				console.log('received: ' + msg);
+			});
+
+			document.getElementById("inField").addEventListener("keyup", function(event) {
+				if (event.keyCode === 13) {
+					event.preventDefault();
+					document.getElementById("sendButton").click();
+				}
 			});
 		}
 	</script>
