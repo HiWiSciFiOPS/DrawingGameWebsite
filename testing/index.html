@@ -17,10 +17,6 @@
 		}
 
 		function initialize() {
-			document.getElementById("sendButton").addEventListener("click", function(event){
-			  event.preventDefault();
-			});
-
 			socket.on('chat message', function(msg) {
 				console.log('received: ' + msg);
 			});
