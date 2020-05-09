@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head></head>
+
+<body onload="initialize();">
+	<input id="inField">
+	<button id="sendButton" type="button" name="button" onclick="sendText();">Send</button>
+
+	<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+
+	<script>
+		var socket = io();
+		function sendText() {
+			socket.emit('chat message', document.getElementById('inField').value);
+			console.log('sent: ' + document.getElementById('inField').value);
+			document.getElementById('inField').value = "";
+		}
+
+		function initialize() {
+			document.getElementById("sendButton").addEventListener("click", function(event){
+			  event.preventDefault();
+			});
+
+			socket.on('chat message', function(msg) {
+				console.log('received: ' + msg);
+			});
+		}
+	</script>
+</body>
