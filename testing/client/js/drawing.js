@@ -72,23 +72,11 @@ function Draw(x, y, isDown) {
 	if (isDown) {
 
     	if (selectedBrush === typePencil || selectedBrush === typeEraser) {
-			/*context.beginPath();
-      		if (selectedBrush === typePencil) {
-        		context.strokeStyle = selectedColor;
-      		} else if (selectedBrush === typeEraser) {
-        		context.strokeStyle = "white";
-      		}
-  			context.lineWidth = document.getElementById(widthID).value;
-  			context.lineJoin = "round";
-			context.lineCap = "round";
-  			context.moveTo(lastX, lastY);
-  			context.lineTo(x, y);
-			context.stroke();*/
-			//context.closePath();
 			if (selectedBrush === typePencil) {
-        		drawLine(lastX, lastY, x, y, selectedColor);
+        		//drawSingleLine(lastX, lastY, x, y, selectedColor);
+				drawLine(lastX, lastY, x, y, selectedColor, document.getElementById(widthID).value);
       		} else if (selectedBrush === typeEraser) {
-        		drawLine(lastX, lastY, x, y, '#FFFFFF');
+        		drawSingleLine(lastX, lastY, x, y, '#FFFFFF');
       		}
 		}
 	}
@@ -100,7 +88,16 @@ function sgn(x) {
 	return (x > 0) ? 1 : (x < 0) ? -1 : 0;
 }
 
-function drawLine(x0, y0, x1, y1, linecolor) {
+function drawLine(x0, y0, x1, y1, color, thickness) {
+	for (var i = 0; i < thickness/2; i++) {
+		drawSingleLine(x0, y0+i, x1, y1+i, color);
+	}
+	for (var i = 0; i < thickness/2; i++) {
+		drawSingleLine(x0, y0-i, x1, y1-i, color);
+	}
+}
+
+function drawSingleLine(x0, y0, x1, y1, linecolor) {
 	var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
 	var imageData = tempCanvas.data;
 	var color = hexToRgbA(linecolor);
@@ -179,7 +176,6 @@ function setColorAt(imgDat, x, y, color) {
 }
 
 function getColorAt(imgDat, x, y) {
-	// (x*4)+((y*canvas.width)*4)
 	var toReturn = [];
 	var offset = (x*4)+((y*canvas.width)*4);
 	toReturn[0] = imgDat[offset+0];
