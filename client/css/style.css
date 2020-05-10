@@ -1,33 +1,31 @@
-.brush-selected {
-  width: 70px;
-  height: 70px;
-  outline-style: solid;
+.brush-selected,
+.brush-unselected {
+    width: 70px;
+    height: 70px;
 }
 
-.brush-unselected {
-	width: 70px;
-	height: 70px;
+.brush-selected {
+    outline-style: solid;
+}
+
+.color-selected,
+.color-unselected {
+    width: 50px;
+    height: 50px;
 }
 
 .color-selected {
-	width: 50px;
-	height: 50px;
-	outline-style: double;
-}
-
-.color-unselected {
-	width: 50px;
-	height: 50px;
+    outline-style: double;
 }
 
 img {
-	image-rendering: pixelated;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 canvas {
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -webkit-crisp-edges;
-	image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
 }
