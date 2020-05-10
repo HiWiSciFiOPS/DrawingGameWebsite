@@ -72,21 +72,20 @@ function Draw(x, y, isDown) {
 	if (isDown) {
 
     	if (selectedBrush === typePencil || selectedBrush === typeEraser) {
-			context.beginPath();
-
+			/*context.beginPath();
       		if (selectedBrush === typePencil) {
         		context.strokeStyle = selectedColor;
       		} else if (selectedBrush === typeEraser) {
         		context.strokeStyle = "white";
       		}
-
   			context.lineWidth = document.getElementById(widthID).value;
   			context.lineJoin = "round";
 			context.lineCap = "round";
   			context.moveTo(lastX, lastY);
   			context.lineTo(x, y);
-			context.stroke();
+			context.stroke();*/
 			//context.closePath();
+			drawLine(lastX, lastY, x, y, selectedColor);
 		}
 	}
 	lastX = x;
@@ -98,6 +97,36 @@ class vec2 {
 		this.x = x;
 		this.y = y;
 	}
+}
+
+function drawLine(xstart, ystart, xend, yend, linecolor) {
+	var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
+	var imageData = tempCanvas.data;
+	var color = hexToRgbA(linecolor);
+
+	{
+		var dx = xend-xstart;
+		var dy = yend-ystart;
+
+		var x = xstart;
+		var y = ystart;
+		setColorAt(imageData, x, y, color);
+
+		var error = dx/2;
+
+		while (x < xend) {
+			x += 1;
+			error -= dy;
+			if (error < 0) {
+				y = y+1;
+				error += dx;
+			}
+			setColorAt(imageData, x, y, color);
+		}
+	}
+
+	tempCanvas.data = imageData;
+	context.putImageData(tempCanvas, 0, 0);
 }
 
 function floodFill(x, y, fillColor) {
