@@ -85,11 +85,42 @@ function Draw(x, y, isDown) {
   			context.lineTo(x, y);
 			context.stroke();*/
 			//context.closePath();
-			drawLine(lastX, lastY, x, y, selectedColor);
+			if (selectedBrush === typePencil) {
+        		drawLine(lastX, lastY, x, y, selectedColor);
+      		} else if (selectedBrush === typeEraser) {
+        		drawLine(lastX, lastY, x, y, '#FFFFFF');
+      		}
 		}
 	}
 	lastX = x;
 	lastY = y;
+}
+
+function sgn(x) {
+	return (x > 0) ? 1 : (x < 0) ? -1 : 0;
+}
+
+function drawLine(x0, y0, x1, y1, linecolor) {
+	var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
+	var imageData = tempCanvas.data;
+	var color = hexToRgbA(linecolor);
+
+	{
+		var dx =  Math.abs(x1-x0), sx = x0<x1 ? 1 : -1;
+		var dy = -Math.abs(y1-y0), sy = y0<y1 ? 1 : -1;
+		var err = dx+dy, e2; /* error value e_xy */
+
+		while (1) {
+			setColorAt(imageData, x0, y0, color);
+			if (x0===x1 && y0===y1) break;
+			e2 = 2*err;
+			if (e2 > dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+			if (e2 < dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+		}
+	}
+
+	tempCanvas.data = imageData;
+	context.putImageData(tempCanvas, 0, 0);
 }
 
 class vec2 {
@@ -97,36 +128,6 @@ class vec2 {
 		this.x = x;
 		this.y = y;
 	}
-}
-
-function drawLine(xstart, ystart, xend, yend, linecolor) {
-	var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
-	var imageData = tempCanvas.data;
-	var color = hexToRgbA(linecolor);
-
-	{
-		var dx = xend-xstart;
-		var dy = yend-ystart;
-
-		var x = xstart;
-		var y = ystart;
-		setColorAt(imageData, x, y, color);
-
-		var error = dx/2;
-
-		while (x < xend) {
-			x += 1;
-			error -= dy;
-			if (error < 0) {
-				y = y+1;
-				error += dx;
-			}
-			setColorAt(imageData, x, y, color);
-		}
-	}
-
-	tempCanvas.data = imageData;
-	context.putImageData(tempCanvas, 0, 0);
 }
 
 function floodFill(x, y, fillColor) {
@@ -142,7 +143,6 @@ function floodFill(x, y, fillColor) {
 		var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
 		var imageData = tempCanvas.data;
 
-		// TODO: write new data to imageData
 		while (queue.length > 0) {
 			var curr = queue.pop();
 			var currColor = getColorAt(imageData, curr.x, curr.y);
