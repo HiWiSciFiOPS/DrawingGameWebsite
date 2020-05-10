@@ -1,9 +1,13 @@
+var express = require('express');
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var fs = require('fs');
+
+app.use(express.static('client'));
 
 app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/client/index.html');
 });
 
 io.on('connection', (socket) => {
@@ -19,6 +23,6 @@ io.on('connection', (socket) => {
 	});
 });
 
-http.listen(8080, () => {
+app.listen(8080, () => {
 	console.log('listening on *:8080');
 });
