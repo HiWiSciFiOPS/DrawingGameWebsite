@@ -26,8 +26,8 @@ function InitThis() {
 	canvas.addEventListener("mouseleave", mouseleave);
 	canvas.addEventListener("mouseenter", mouseenter);
 
-	//context.fillStyle = "rgba(0, 0, 255, 255)";
-    //context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillStyle = '#FFFFFF';
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
 	context.imageSmoothingEnabled = false;
 }
@@ -73,10 +73,9 @@ function Draw(x, y, isDown) {
 
     	if (selectedBrush === typePencil || selectedBrush === typeEraser) {
 			if (selectedBrush === typePencil) {
-        		//drawSingleLine(lastX, lastY, x, y, selectedColor);
 				drawLine(lastX, lastY, x, y, selectedColor, document.getElementById(widthID).value);
       		} else if (selectedBrush === typeEraser) {
-        		drawSingleLine(lastX, lastY, x, y, '#FFFFFF');
+        		drawLine(lastX, lastY, x, y, '#FFFFFF', document.getElementById(widthID).value);
       		}
 		}
 	}
@@ -84,25 +83,73 @@ function Draw(x, y, isDown) {
 	lastY = y;
 }
 
-function sgn(x) {
-	return (x > 0) ? 1 : (x < 0) ? -1 : 0;
+function fillCircle(imageData, xp ,yp, radius, col) {
+    var xoff = 0;
+    var yoff = radius;
+    var balance = -radius;
+
+    while (xoff <= yoff) {
+         var p0 = xp - xoff;
+         var p1 = xp - yoff;
+
+         var w0 = xoff + xoff;
+         var w1 = yoff + yoff;
+
+         imageData = hLine(imageData, p0, yp + yoff, w0, col);
+         imageData = hLine(imageData, p0, yp - yoff, w0, col);
+
+		 imageData = hLine(imageData, p1, yp + xoff, w1, col);
+         imageData = hLine(imageData, p1, yp - xoff, w1, col);
+
+        if ((balance += xoff++ + xoff)>= 0) {
+            balance -= --yoff + yoff;
+        }
+    }
+
+	return imageData;
 }
 
-function drawLine(x0, y0, x1, y1, color, thickness) {
-	for (var i = 0; i < thickness/2; i++) {
-		drawSingleLine(x0, y0+i, x1, y1+i, color);
-	}
-	for (var i = 0; i < thickness/2; i++) {
-		drawSingleLine(x0, y0-i, x1, y1-i, color);
-	}
+function hLine(imageData, xp, yp, w, col) {
+    for (var i = 0; i < w; i++){
+		setColorAt(imageData, xp + i, yp, col);
+    }
+	return imageData;
 }
 
-function drawSingleLine(x0, y0, x1, y1, linecolor) {
+function drawLine(x0, y0, x1, y1, lcolor, thickness) {
 	var tempCanvas = context.getImageData(0, 0, canvas.width, canvas.height);
 	var imageData = tempCanvas.data;
-	var color = hexToRgbA(linecolor);
+	var color = hexToRgbA(lcolor);
+	console.log('color: ' + color);
 
-	{
+	imageData = fillCircle(imageData, x0, y0, Math.floor(thickness/2), color);
+	imageData = fillCircle(imageData, x1, y1, Math.floor(thickness/2), color);
+
+	var dx = Math.abs(x0-x1);
+	var dy = Math.abs(y0-y1);
+
+	if (dx>dy) {
+		for (var i = 0; i < thickness/2; i++) {
+			imageData = drawSingleLine(imageData, x0, y0+i, x1, y1+i, color);
+		}
+		for (var i = 0; i < thickness/2; i++) {
+			imageData = drawSingleLine(imageData, x0, y0-i, x1, y1-i, color);
+		}
+	} else {
+		for (var i = 0; i < thickness/2; i++) {
+			imageData = drawSingleLine(imageData, x0+i, y0, x1+i, y1, color);
+		}
+		for (var i = 0; i < thickness/2; i++) {
+			imageData = drawSingleLine(imageData, x0-i, y0, x1-i, y1, color);
+		}
+	}
+
+	tempCanvas.data = imageData;
+	context.putImageData(tempCanvas, 0, 0);
+}
+
+function drawSingleLine(imageData, x0, y0, x1, y1, color) {
+{
 		var dx =  Math.abs(x1-x0), sx = x0<x1 ? 1 : -1;
 		var dy = -Math.abs(y1-y0), sy = y0<y1 ? 1 : -1;
 		var err = dx+dy, e2; /* error value e_xy */
@@ -115,9 +162,7 @@ function drawSingleLine(x0, y0, x1, y1, linecolor) {
 			if (e2 < dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
 		}
 	}
-
-	tempCanvas.data = imageData;
-	context.putImageData(tempCanvas, 0, 0);
+	return imageData;
 }
 
 class vec2 {
