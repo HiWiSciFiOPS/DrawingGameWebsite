@@ -29,3 +29,9 @@ canvas {
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
 }
+
+body{
+	background: url("../gizmos/hexa.png") center fixed;
+	background-size: 20px;
+	image-rendering: pixelated;
+}
