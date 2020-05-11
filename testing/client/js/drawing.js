@@ -1,20 +1,4 @@
 
-
-function Draw(x, y, isDown) {
-	if (isDown) {
-
-    	if (selectedBrush === typePencil || selectedBrush === typeEraser) {
-			if (selectedBrush === typePencil) {
-				drawLine(lastX, lastY, x, y, selectedColor, document.getElementById(widthID).value);
-      		} else if (selectedBrush === typeEraser) {
-        		drawLine(lastX, lastY, x, y, '#FFFFFF', document.getElementById(widthID).value);
-      		}
-		}
-	}
-	lastX = x;
-	lastY = y;
-}
-
 function fillCircle(imageData, xp ,yp, radius, col) {
     var xoff = 0;
     var yoff = radius;
@@ -27,11 +11,11 @@ function fillCircle(imageData, xp ,yp, radius, col) {
          var w0 = xoff + xoff;
          var w1 = yoff + yoff;
 
-         imageData = hLine(imageData, p0, yp + yoff, w0, col);
-         imageData = hLine(imageData, p0, yp - yoff, w0, col);
+         imageData = horizontalLine(imageData, p0, yp + yoff, w0, col);
+         imageData = horizontalLine(imageData, p0, yp - yoff, w0, col);
 
-		 imageData = hLine(imageData, p1, yp + xoff, w1, col);
-         imageData = hLine(imageData, p1, yp - xoff, w1, col);
+		 imageData = horizontalLine(imageData, p1, yp + xoff, w1, col);
+         imageData = horizontalLine(imageData, p1, yp - xoff, w1, col);
 
         if ((balance += xoff++ + xoff)>= 0) {
             balance -= --yoff + yoff;
@@ -41,7 +25,7 @@ function fillCircle(imageData, xp ,yp, radius, col) {
 	return imageData;
 }
 
-function hLine(imageData, xp, yp, w, col) {
+function horizontalLine(imageData, xp, yp, w, col) {
     for (var i = 0; i < w; i++){
 		setColorAt(imageData, xp + i, yp, col);
     }

@@ -15,8 +15,7 @@ const widthID = "setLWidth";
 var selectedColor = '#000000';
 var selectedBrush = 'pencil';
 
-
-//connection stuff
+//establish connection
 var socket = io();
 
 InitThis();
@@ -30,26 +29,55 @@ function InitThis() {
 	canvas.addEventListener("mouseleave", mouseleave);
 	canvas.addEventListener("mouseenter", mouseenter);
 
+	socket.on('pencil', (data) => {
+		drawLine(data.x0, data.y0, data.x1, data.y1, data.color, data.thickness);
+	});
+
+	socket.on('bucket', (data) => {
+		floodFill(data.x, data.y, hexToRgbA(data.color));
+	});
+
+	socket.on('clear', () => {
+		clear();
+	});
+
 	context.fillStyle = '#FFFFFF';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
 	context.imageSmoothingEnabled = false;
 }
 
+function Draw(brush, color, x, y, isDown) {
+	if (isDown) {
+    	if (brush === typePencil || brush === typeEraser) {
+			if (brush === typePencil) {
+				socket.emit('pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:selectedColor, thickness:document.getElementById(widthID).value });
+      		} else if (selectedBrush === typeEraser) {
+        		socket.emit('pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:'#FFFFFF', thickness:document.getElementById(widthID).value });
+      		}
+		} else if (brush === typeBucket) {
+			//floodFill(x, y, hexToRgbA(color));
+			socket.emit('bucket', { x:x, y:y, color:color });
+		}
+	}
+	lastX = x;
+	lastY = y;
+}
+
 function mousedown(e) {
 	if (enabled) {
 	  	if (selectedBrush === typeBucket) {
-			floodFill(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, hexToRgbA(selectedColor));
+			Draw(selectedBrush, selectedColor, e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
 		} else if (selectedBrush === typePencil || selectedBrush === typeEraser) {
     		mousePressed = true;
-    		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
+    		Draw(selectedBrush, selectedColor, e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 		}
 	}
 }
 
 function mousemove(e) {
 	if (enabled && mousePressed && (selectedBrush === typePencil || selectedBrush === typeEraser)) {
-    	Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
+    	Draw(selectedBrush, selectedColor, e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, true);
 	}
 }
 
@@ -68,11 +96,15 @@ function mouseleave(e) {
 function mouseenter(e) {
 	if (enabled && e.buttons === 1 && (selectedBrush === typePencil || selectedBrush === typeEraser)) {
 	  	mousePressed = true;
-		Draw(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
+		Draw(selectedBrush, selectedColor, e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop, false);
 	}
 }
 
 function clearArea() {
+	socket.emit('clear');
+}
+
+function clear() {
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }

@@ -13,7 +13,7 @@ io.on('connection', (socket) => {
 	console.log('user connected: ' + socket.id);
 
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.log('user disconnected: ' + socket.id);
 	});
 
 	socket.on('chat message', (msg) => {
@@ -21,8 +21,16 @@ io.on('connection', (socket) => {
 		io.emit('chat message', msg);
 	});
 
-	socket.on('pencil', (color, thickness) => {
-		console.log('pencil stroke: c:' + color + ' w:' + thickness);
+	socket.on('pencil', (data) => {
+		io.emit('pencil', data);
+	});
+
+	socket.on('bucket', (data) => {
+		io.emit('bucket', data);
+	});
+
+	socket.on('clear', () => {
+		io.emit('clear');
 	});
 });
 
