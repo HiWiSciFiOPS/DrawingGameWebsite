@@ -8,56 +8,64 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body onload="InitThis();">
+<body>
 
-	<script type="text/javascript" src="js/drawing.js"></script>
+	<div  class="d-flex container  flex-column"align="center">
+		<div>
+			<canvas id="drawingCanvas" width="800" height="600" style="border:2px solid black"></canvas>
+		</div>
 
-	<div align="center">
+		<div class="d-flex p-2 flex-column">
+			<div>
+				<img id="brush_pencil" class="brush-selected" onclick="javascript:selectBrush('pencil');" src="gizmos/brushes/brush_pencil.png">
+				<img id="brush_bucket" class="brush-unselected" onclick="javascript:selectBrush('bucket');" src="gizmos/brushes/brush_bucket.png">
+				<img id="brush_eraser" class="brush-unselected" onclick="javascript:selectBrush('eraser');" src="gizmos/brushes/brush_eraser.png">
 
-		<canvas id="drawingCanvas" width="800" height="600" style="border:2px solid black"></canvas>
-		<br>
+				Line width : <select id="setLWidth">
+					<option value="1">1</option>
+					<option value="3">3</option>
+					<option value="5" selected="selected">5</option>
+					<option value="7">7</option>
+					<option value="9">9</option>
+					<option value="11">11</option>
+					<option value="13">13</option>
+					<option value="15">15</option>
+				</select>
 
-		<img id="brush_pencil" class="brush-selected" onclick="javascript:selectBrush('pencil');" src="gizmos/brushes/brush_pencil.png">
-		<img id="brush_bucket" class="brush-unselected" onclick="javascript:selectBrush('bucket');" src="gizmos/brushes/brush_bucket.png">
-		<img id="brush_eraser" class="brush-unselected" onclick="javascript:selectBrush('eraser');" src="gizmos/brushes/brush_eraser.png">
+				<img class="big-img-unselected" onclick="javascript:clearArea();" src="gizmos/bin.png">
+			</div>
 
-		Line width : <select id="setLWidth">
-			<option value="1">1</option>
-			<option value="3">3</option>
-			<option value="5" selected="selected">5</option>
-			<option value="7">7</option>
-			<option value="9">9</option>
-			<option value="11">11</option>
-			<option value="13">13</option>
-			<option value="15">15</option>
-		</select>
-
-		<img class="big-img-unselected" onclick="javascript:clearArea();" src="gizmos/bin.png">
-
-		<br>
-
-		<img id="color_#000000" class="color-selected" onclick="javascript:selectColor('#000000');" src="gizmos/colors/color_000000.png">
-		<img id="color_#FFFFFF" class="color-unselected" onclick="javascript:selectColor('#FFFFFF');" src="gizmos/colors/color_FFFFFF.png">
-		<img id="color_#FF0000" class="color-unselected" onclick="javascript:selectColor('#FF0000');" src="gizmos/colors/color_FF0000.png">
-		<img id="color_#00FF00" class="color-unselected" onclick="javascript:selectColor('#00FF00');" src="gizmos/colors/color_00FF00.png">
-		<img id="color_#0000FF" class="color-unselected" onclick="javascript:selectColor('#0000FF');" src="gizmos/colors/color_0000FF.png">
-		<img id="color_#FFFF00" class="color-unselected" onclick="javascript:selectColor('#FFFF00');" src="gizmos/colors/color_FFFF00.png">
-		<img id="color_#00FFFF" class="color-unselected" onclick="javascript:selectColor('#00FFFF');" src="gizmos/colors/color_00FFFF.png">
-		<img id="color_#FF00FF" class="color-unselected" onclick="javascript:selectColor('#FF00FF');" src="gizmos/colors/color_FF00FF.png">
-		<br>
-		<img id="color_#C0C0C0" class="color-unselected" onclick="javascript:selectColor('#C0C0C0');" src="gizmos/colors/color_C0C0C0.png">
-		<img id="color_#808080" class="color-unselected" onclick="javascript:selectColor('#808080');" src="gizmos/colors/color_808080.png">
-		<img id="color_#800000" class="color-unselected" onclick="javascript:selectColor('#800000');" src="gizmos/colors/color_800000.png">
-		<img id="color_#808000" class="color-unselected" onclick="javascript:selectColor('#808000');" src="gizmos/colors/color_808000.png">
-		<img id="color_#008000" class="color-unselected" onclick="javascript:selectColor('#008000');" src="gizmos/colors/color_008000.png">
-		<img id="color_#800080" class="color-unselected" onclick="javascript:selectColor('#800080');" src="gizmos/colors/color_800080.png">
-		<img id="color_#008080" class="color-unselected" onclick="javascript:selectColor('#008080');" src="gizmos/colors/color_008080.png">
-		<img id="color_#000080" class="color-unselected" onclick="javascript:selectColor('#000080');" src="gizmos/colors/color_000080.png">
-
+			<div class="p-2 mx-auto" >
+				<div class = "row">
+					<img id="color_#000000" class="color-selected" onclick="javascript:selectColor('#000000');" src="gizmos/colors/color_000000.png">
+					<img id="color_#FFFFFF" class="color-unselected" onclick="javascript:selectColor('#FFFFFF');" src="gizmos/colors/color_FFFFFF.png">
+					<img id="color_#FF0000" class="color-unselected" onclick="javascript:selectColor('#FF0000');" src="gizmos/colors/color_FF0000.png">
+					<img id="color_#00FF00" class="color-unselected" onclick="javascript:selectColor('#00FF00');" src="gizmos/colors/color_00FF00.png">
+					<img id="color_#0000FF" class="color-unselected" onclick="javascript:selectColor('#0000FF');" src="gizmos/colors/color_0000FF.png">
+					<img id="color_#FFFF00" class="color-unselected" onclick="javascript:selectColor('#FFFF00');" src="gizmos/colors/color_FFFF00.png">
+					<img id="color_#00FFFF" class="color-unselected" onclick="javascript:selectColor('#00FFFF');" src="gizmos/colors/color_00FFFF.png">
+					<img id="color_#FF00FF" class="color-unselected" onclick="javascript:selectColor('#FF00FF');" src="gizmos/colors/color_FF00FF.png">
+				</div>
+				<div class = "row">
+					<img id="color_#C0C0C0" class="color-unselected" onclick="javascript:selectColor('#C0C0C0');" src="gizmos/colors/color_C0C0C0.png">
+					<img id="color_#808080" class="color-unselected" onclick="javascript:selectColor('#808080');" src="gizmos/colors/color_808080.png">
+					<img id="color_#800000" class="color-unselected" onclick="javascript:selectColor('#800000');" src="gizmos/colors/color_800000.png">
+					<img id="color_#808000" class="color-unselected" onclick="javascript:selectColor('#808000');" src="gizmos/colors/color_808000.png">
+					<img id="color_#008000" class="color-unselected" onclick="javascript:selectColor('#008000');" src="gizmos/colors/color_008000.png">
+					<img id="color_#800080" class="color-unselected" onclick="javascript:selectColor('#800080');" src="gizmos/colors/color_800080.png">
+					<img id="color_#008080" class="color-unselected" onclick="javascript:selectColor('#008080');" src="gizmos/colors/color_008080.png">
+					<img id="color_#000080" class="color-unselected" onclick="javascript:selectColor('#000080');" src="gizmos/colors/color_000080.png">
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/drawing.js"></script>
+	<script type="text/javascript" src="js/logic.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
 </html>
