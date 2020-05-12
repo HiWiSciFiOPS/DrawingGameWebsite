@@ -81,10 +81,13 @@ function selectColor(hex) {
 	console.log("selected color: " + hex);
 
 	var btn = document.getElementById("color_" + selectedColor);
-	btn.setAttribute("class", "color-unselected");
+	btn.classList.remove("color-selected");
+	btn.classList.add("color-unselected");
+	//btn.setAttribute("class", "color-unselected");
 
 	btn = document.getElementById("color_" + hex);
-	btn.setAttribute("class", "color-selected");
+	btn.classList.remove("color-unselected");
+	btn.classList.add("color-selected");
 
 	selectedColor = hex;
 }
