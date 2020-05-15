@@ -9,6 +9,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/client/index.html');
 });
 
+class drawCall {
+	constructor(type, data) {
+		this.type = type;
+		this.data = data;
+	}
+}
+
 io.on('connection', (socket) => {
 	console.log('user connected: ' + socket.id);
 
@@ -21,16 +28,16 @@ io.on('connection', (socket) => {
 		io.emit('chat message', msg);
 	});
 
-	socket.on('pencil', (data) => {
-		io.emit('pencil', data);
+	socket.on('draw_pencil', (data) => {
+		io.emit('draw_pencil', data);
 	});
 
-	socket.on('bucket', (data) => {
-		io.emit('bucket', data);
+	socket.on('draw_bucket', (data) => {
+		io.emit('draw_bucket', data);
 	});
 
-	socket.on('clear', () => {
-		io.emit('clear');
+	socket.on('draw_clear', () => {
+		io.emit('draw_clear');
 	});
 });
 

@@ -29,15 +29,15 @@ function InitThis() {
 	canvas.addEventListener("mouseleave", mouseleave);
 	canvas.addEventListener("mouseenter", mouseenter);
 
-	socket.on('pencil', (data) => {
+	socket.on('draw_pencil', (data) => {
 		drawLine(data.x0, data.y0, data.x1, data.y1, data.color, data.thickness);
 	});
 
-	socket.on('bucket', (data) => {
+	socket.on('draw_bucket', (data) => {
 		floodFill(data.x, data.y, hexToRgbA(data.color));
 	});
 
-	socket.on('clear', () => {
+	socket.on('draw_clear', () => {
 		clear();
 	});
 
@@ -51,13 +51,13 @@ function Draw(brush, color, x, y, isDown) {
 	if (isDown) {
     	if (brush === typePencil || brush === typeEraser) {
 			if (brush === typePencil) {
-				socket.emit('pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:selectedColor, thickness:document.getElementById(widthID).value });
+				socket.emit('draw_pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:selectedColor, thickness:document.getElementById(widthID).value });
       		} else if (selectedBrush === typeEraser) {
-        		socket.emit('pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:'#FFFFFF', thickness:document.getElementById(widthID).value });
+        		socket.emit('draw_pencil', { x0:lastX, y0:lastY, x1:x, y1:y, color:'#FFFFFF', thickness:document.getElementById(widthID).value });
       		}
 		} else if (brush === typeBucket) {
 			//floodFill(x, y, hexToRgbA(color));
-			socket.emit('bucket', { x:x, y:y, color:color });
+			socket.emit('draw_bucket', { x:x, y:y, color:color });
 		}
 	}
 	lastX = x;
@@ -101,7 +101,7 @@ function mouseenter(e) {
 }
 
 function clearArea() {
-	socket.emit('clear');
+	socket.emit('draw_clear');
 }
 
 function clear() {
