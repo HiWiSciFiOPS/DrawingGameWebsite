@@ -9,7 +9,13 @@
 	<br>
 	<button id="joinRoomButton">Join Room</button>
 	<br>
-	<button id="createRoomButton">Create Room</button>
+	<button id="createRoomButton" onclick="javascript:createRoom();">Create Room</button>
+	<script type="text/javascript">
+		function createRoom() {
+			localStorage.setItem("name", document.getElementById('nameInput').value);
+			window.open("./waitingRoom.html", "_self");
+		}
+	</script>
 </body>
 
 </html>
